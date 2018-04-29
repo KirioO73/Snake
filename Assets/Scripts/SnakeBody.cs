@@ -7,7 +7,7 @@ public class SnakeBody : MonoBehaviour {
 	public Transform head;                       // tete a la quelle la boule du corps est attachée
 
 	void Start(){
-		head = GameObject.FindGameObjectWithTag("Player").gameObject.transform;                           //recuperation de la tete
+		//head = GameObject.FindGameObjectWithTag("Player").gameObject.transform;                           //recuperation de la tete
 		for(int i = 0; i < head.GetComponent<SnakeMovements>().bodyParts.Count; i++){                     //parcour de la liste du corps
 			if(gameObject == head.GetComponent<SnakeMovements>().bodyParts[i].gameObject){                //ajoute la boule dans la liste, et met a jour le INT position de la boulle
 				myOrder = i;

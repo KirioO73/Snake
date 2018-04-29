@@ -11,7 +11,7 @@ public class SnakeMovements : MonoBehaviour {
 	}
 	
 	void Update () {
-		//Commandes du controle du snake Q et D dans ce cas
+		//Commandes du controle du snake Q et D dans ce cas (--> Fait bouger tt les serpents simultanément)
 		if (Input.GetKey (KeyCode.Q)) {
 			currentRotation += RotationSensitivity * Time.deltaTime;
 		}
@@ -52,13 +52,18 @@ public class SnakeMovements : MonoBehaviour {
 				Transform newBodyPart = Instantiate (bodyObject, currentPos, Quaternion.identity) as Transform;        //On instantie
 				bodyParts.Add (newBodyPart);                                                                           // ajout dans la liste des bouts de corps
 				newBodyPart.GetComponent<SpriteRenderer> ().sortingOrder = 0;										   //On met a la position 0 dans le layer 
-			}else {                                                             // si on a deja des boules du corps
+                newBodyPart.transform.parent = gameObject.transform.parent;                                            //Rangement --> limite la polution visuel dans l'éditeur + simplifie certaine gestions
+                newBodyPart.GetComponent<SnakeBody>().head = this.transform;                                           //On donne sa tete Au corps (au lieu de passer apr tag)
+            }
+            else {                                                             // si on a deja des boules du corps
 				Vector3 currentPos = bodyParts[bodyParts.Count-1].position;     // on fait apparaitre la prochaine boule aux coordonnées de la dernierre boule du corps
 				Transform newBodyPart = Instantiate (bodyObject, currentPos, Quaternion.identity) as Transform; //On instantie
 				bodyParts.Add (newBodyPart);                                                  					 // ajout dans la liste des bouts de corps
 				majLayers ();													//Decalage de toutes les autres boules du couprs dans le layer
-				newBodyPart.GetComponent<SpriteRenderer> ().sortingOrder = 0;	//On place la dernierre boule en dessoud de toutes les autres
-			}
+				newBodyPart.GetComponent<SpriteRenderer> ().sortingOrder = 0;   //On place la dernierre boule en dessoud de toutes les autres
+                newBodyPart.transform.parent = gameObject.transform.parent;     //Rangement --> limite la polution visuel dans l'éditeur + simplifie certaine gestions
+                newBodyPart.GetComponent<SnakeBody>().head = this.transform;    //On donne sa tete Au corps (au lieu de passer apr tag)
+            }
 		}
 	}
 
@@ -69,4 +74,27 @@ public class SnakeMovements : MonoBehaviour {
 		}
 	}
 		
+    //Mouvement gauche
+    public void rotateLeft()
+    {
+        currentRotation += RotationSensitivity * Time.deltaTime;
+    }
+
+    //Mouvement droit
+    public void rotateRight()
+    {
+        currentRotation -= RotationSensitivity * Time.deltaTime;
+    }
+
+    //Ralentissement
+    public void slowDown()
+    {
+        //TODO
+    }
+
+    //Accélération
+    public void speedUp()
+    {
+        //TODO
+    }
 }
