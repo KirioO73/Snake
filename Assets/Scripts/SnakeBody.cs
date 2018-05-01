@@ -27,4 +27,41 @@ public class SnakeBody : MonoBehaviour {
 			transform.position = Vector3.SmoothDamp(transform.position, head.GetComponent<SnakeMovements>().bodyParts[myOrder-1].position, ref movementVelocity, overTime);
 		}
 	}
-}
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Player"                                    //Si je me fait touché par un joueur
+            && other.gameObject.transform != head                               //Qui n'est pas ma propre tete,
+            && other.GetComponent<SnakeMovements>().partnerAv != head           //Qui n'est pas mon partenaireAv,
+            && other.GetComponent<SnakeMovements>().partnerAr != head)          //Ni mon partenaireAr
+        {
+            decoupeCorps(myOrder, other.gameObject.transform);                  //Je me fait découper
+        }
+    }
+
+    void decoupeCorps(int order, Transform otherT)
+    {   
+        //Découper = destruction de mon corps de l'endroit touché à ma queue 
+        for (int i = head.GetComponent<SnakeMovements>().bodyParts.Count - 1; i>order ; i--)
+        {
+            Destroy(head.GetComponent<SnakeMovements>().bodyParts[i].gameObject);
+            head.GetComponent<SnakeMovements>().bodyParts.Remove(head.GetComponent<SnakeMovements>().bodyParts[i]);
+        }
+
+        if (head.GetComponent<SnakeMovements>().partnerAv == null)              //Si je suis celui de derière je me fait juste découper          
+        {
+            if (head.GetComponent<SnakeMovements>().partnerAr != null)                                              //Si j'ai un partnaire arrière
+            {
+                head.GetComponent<SnakeMovements>().partnerAr.GetComponent<SnakeMovements>().partnerAv = null;      //Je me sépare de lui ( il n'a plus de partnaire avant)
+            }
+
+            if (otherT.GetComponent<SnakeMovements>().partnerAv == null             //Si celui qui me découpe a déja un partenaireAv, je me fait juste découper et séparer
+                && otherT.GetComponent<SnakeMovements>().partnerAr == null)         //Si celui qui me découpe a déja un partenaireAr, je me fait juste découper et séparé
+            {
+                head.GetComponent<SnakeMovements>().partnerAr = otherT;                                                 //Celui qui m'a mordu est mon nouveau partnaire arière
+                otherT.GetComponent<SnakeMovements>().partnerAv = head;                                                 //Je suis le nouveau partenaire avant de celui qui m'a mordu
+            }
+        }
+    }
+
+    }

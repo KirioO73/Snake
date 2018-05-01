@@ -160,7 +160,7 @@ MonoBehaviour:
   m_MinSize: {x: 234, y: 492}
   m_MaxSize: {x: 10004, y: 14042}
   vertical: 1
-  controlID: 69
+  controlID: 75
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -347,9 +347,9 @@ MonoBehaviour:
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0.053723574, y: -1.6320046, z: -0.12109375}
+    m_Target: {x: -1.9834819, y: -0.77432215, z: -0.12109375}
     speed: 2
-    m_Value: {x: 0.053723574, y: -1.6320046, z: -0.12109375}
+    m_Value: {x: -1.9834819, y: -0.77432215, z: -0.12109375}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -419,10 +419,10 @@ MonoBehaviour:
     height: 395
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: f0b4faffa8bbfaff4eccfaffb4f3faff90fdfaffb0280000
-    m_LastClickedID: 10416
-    m_ExpandedIDs: eeb4faffb2bbfaff4cccfaffb2f3faff8efdfaff126efbff42dbfbffe6f5fdffae25feff5097feff6697feff24ccfeff36f7feff36fbffff000000003a280000b0280000
+    scrollPos: {x: 0, y: 6}
+    m_SelectedIDs: f0d1ffff
+    m_LastClickedID: -11792
+    m_ExpandedIDs: 54fbffff98fbffff000000005e280000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -484,19 +484,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Prefabs
+    - Assets/Scripts
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Prefabs
+  - Assets/Scripts
   m_LastFoldersGridSize: -1
   m_LastProjectPath: E:\Documents\Workpace\Unity\Snake
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: ae270000
-    m_LastClickedID: 10158
-    m_ExpandedIDs: 000000007c270000ffffff7f
+    m_SelectedIDs: bc270000
+    m_LastClickedID: 10172
+    m_ExpandedIDs: 0000000084270000ffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -524,7 +524,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000007c270000
+    m_ExpandedIDs: 0000000084270000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -555,18 +555,18 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: c62300004a35000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Snake1
-      m_OriginalName: Snake1
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: -412526
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 9}
     m_CreateAssetUtility:

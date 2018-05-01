@@ -58,7 +58,7 @@ public class TouchInput : MonoBehaviour {
 #endif 
 //--------------------------------------------------------------------------------------------------------------------
 
-        if(Input.touchCount < 0)
+        if(Input.touchCount > 0)
         {
 
             touchesOld = new GameObject[touchList.Count]; 
@@ -68,7 +68,7 @@ public class TouchInput : MonoBehaviour {
             foreach(Touch touch in Input.touches)
             {
 
-                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(touch.position), Vector2.zero); // 2D trés Important sinon on peut pas détecter des sprites c'est chelou
+                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(touch.position), Vector2.zero, touchInputMask); // 2D trés Important sinon on peut pas détecter des sprites c'est chelou
 
                 if (hit.collider != null)
                 {
