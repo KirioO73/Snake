@@ -48,20 +48,37 @@ public class SnakeBody : MonoBehaviour {
             head.GetComponent<SnakeMovements>().bodyParts.Remove(head.GetComponent<SnakeMovements>().bodyParts[i]);
         }
 
-        if (head.GetComponent<SnakeMovements>().partnerAv == null)              //Si je suis celui de derière je me fait juste découper          
+        if (otherT.GetComponent<SnakeMovements>().partnerAv == null){                                                              //si celui qui me touche n'est pas en coop derriere
+            if (head.GetComponent<SnakeMovements>().partnerAv == null && head.GetComponent<SnakeMovements>().partnerAr == null)    //Si je suis solo
+            {
+                if (otherT.GetComponent<SnakeMovements>().partnerAv == null && otherT.GetComponent<SnakeMovements>().partnerAr == null) //si celui qui me touche est solo
+                {
+                    head.GetComponent<SnakeMovements>().partnerAr = otherT;                                                 //Celui qui m'a mordu est mon nouveau partnaire arière
+                    otherT.GetComponent<SnakeMovements>().partnerAv = head;                                                 //Je suis le nouveau partenaire avant de celui qui m'a mordu
+                }
+            }
+            else if (head.GetComponent<SnakeMovements>().partnerAv == null && otherT.GetComponent<SnakeMovements>().partnerAr != null)       // Si je suis devant 
+            {
+                    head.GetComponent<SnakeMovements>().partnerAr.GetComponent<SnakeMovements>().partnerAv = null;   //je me fais detacher 
+                    head.GetComponent<SnakeMovements>().partnerAr = null;
+            }
+        }
+
+
+
+        /*
+        if (head.GetComponent<SnakeMovements>().partnerAv == null 
+            && otherT.GetComponent<SnakeMovements>().partnerAv == null             //Si celui qui me découpe a déja un partenaireAv, je me fait juste découper et séparer
+            && otherT.GetComponent<SnakeMovements>().partnerAr == null)         //Si celui qui me découpe a déja un partenaireAr, je me fait juste découper et séparé//Si je suis celui de derière je me fait juste découper          
         {
             if (head.GetComponent<SnakeMovements>().partnerAr != null)                                              //Si j'ai un partnaire arrière
             {
                 head.GetComponent<SnakeMovements>().partnerAr.GetComponent<SnakeMovements>().partnerAv = null;      //Je me sépare de lui ( il n'a plus de partnaire avant)
             }
 
-            if (otherT.GetComponent<SnakeMovements>().partnerAv == null             //Si celui qui me découpe a déja un partenaireAv, je me fait juste découper et séparer
-                && otherT.GetComponent<SnakeMovements>().partnerAr == null)         //Si celui qui me découpe a déja un partenaireAr, je me fait juste découper et séparé
-            {
-                head.GetComponent<SnakeMovements>().partnerAr = otherT;                                                 //Celui qui m'a mordu est mon nouveau partnaire arière
-                otherT.GetComponent<SnakeMovements>().partnerAv = head;                                                 //Je suis le nouveau partenaire avant de celui qui m'a mordu
-            }
-        }
+            head.GetComponent<SnakeMovements>().partnerAr = otherT;                                                 //Celui qui m'a mordu est mon nouveau partnaire arière
+            otherT.GetComponent<SnakeMovements>().partnerAv = head;                                                 //Je suis le nouveau partenaire avant de celui qui m'a mordu
+        }*/
     }
 
     }

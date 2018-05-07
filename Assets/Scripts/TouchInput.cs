@@ -21,9 +21,9 @@ public class TouchInput : MonoBehaviour {
 
             touchesOld = new GameObject[touchList.Count];
             touchList.CopyTo(touchesOld);
-            touchList.Clear();     
-            
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero); 
+            touchList.Clear();
+
+            hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero); 
 
             if (hit.collider != null)
             {
@@ -68,7 +68,7 @@ public class TouchInput : MonoBehaviour {
             foreach(Touch touch in Input.touches)
             {
 
-                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(touch.position), Vector2.zero, touchInputMask); // 2D trés Important sinon on peut pas détecter des sprites c'est chelou
+                hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(touch.position), Vector2.zero, touchInputMask); // 2D trés Important sinon on peut pas détecter des sprites c'est chelou
 
                 if (hit.collider != null)
                 {

@@ -146,18 +146,18 @@ public class SnakeMovements : MonoBehaviour {
     //Ralentissement
     public void slowDown()
     {
-        partnerAv.GetComponent<SnakeMovements>().speed = 2.0f;
+        partnerAv.GetComponent<SnakeMovements>().speed = 1.5f;
     }
 
     //Accélération
     public void speedUp()
-    {
-        partnerAv.GetComponent<SnakeMovements>().speed = 4.0f;
+    {   
+        if(partnerAv != null) partnerAv.GetComponent<SnakeMovements>().speed = 3.5f;
     }
 
     //Remet la vitesse
     public void resetVitesse()
     {
-        partnerAv.GetComponent<SnakeMovements>().speed = 3.0f;
+        if (partnerAv != null) partnerAv.GetComponent<SnakeMovements>().speed = 2.5f;
     }
 }

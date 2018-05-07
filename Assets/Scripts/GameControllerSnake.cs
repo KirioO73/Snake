@@ -8,6 +8,9 @@ public class GameControllerSnake : MonoBehaviour {
     public Vector3 spawnValues;
     public float nouritureDelay;
 
+    [Range(0.0f, 200.0f)]
+    public float delay;
+
     private float radius;
 
     bool spawnEnable;
@@ -20,14 +23,26 @@ public class GameControllerSnake : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if(delay > 5)
+        {
+            delay -= Time.deltaTime;
+        }
+        else if(delay > 0)
+        {
+            spawnEnable = false;
+            delay -= Time.deltaTime;
+        }
+        else
+        {
+            //Load scene Hub
+        }
 	}
 
 
 
     IEnumerator SpawnNouriture()
     {
-        while (spawnEnable)
+        while (true)
         {
             Vector3 spawnPosition;
             do
@@ -40,7 +55,7 @@ public class GameControllerSnake : MonoBehaviour {
             }
             else
             {
-                yield return new WaitForSeconds(5 * nouritureDelay);
+                StopCoroutine(SpawnNouriture());
             }
             yield return new WaitForSeconds(Random.Range(0, nouritureDelay));
         }        
