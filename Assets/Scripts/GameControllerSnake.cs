@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameControllerSnake : MonoBehaviour {
 
-    public GameObject cible;
+    public GameObject[] cibles;
     public Vector3 spawnValues;
     public float nouritureDelay;
 
@@ -17,12 +17,15 @@ public class GameControllerSnake : MonoBehaviour {
     // Use this for initialization
     void Start () {
         spawnEnable = true;
-        radius = cible.GetComponent<Renderer>().bounds.size.x;
+        radius = cibles[0].GetComponent<Renderer>().bounds.size.x;
         StartCoroutine(SpawnNouriture());
     }
 	
 	// Update is called once per frame
 	void Update () {
+
+
+
 		if(delay > 5)
         {
             delay -= Time.deltaTime;
@@ -36,7 +39,17 @@ public class GameControllerSnake : MonoBehaviour {
         {
             //Load scene Hub
         }
-	}
+
+        //Presentation, help clavier
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Application.Quit();
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Application.LoadLevel(Application.loadedLevel);
+        }
+    }
 
 
 
@@ -51,7 +64,7 @@ public class GameControllerSnake : MonoBehaviour {
             } while (Physics2D.OverlapCircle(spawnPosition, radius) != null);
             if (spawnEnable)
             {
-                Instantiate(cible, spawnPosition, Quaternion.Euler(0, 0, Random.Range(0, 360)));
+                Instantiate(cibles[Random.Range(0, cibles.Length -1)], spawnPosition, Quaternion.Euler(0, 0, Random.Range(0, 360)));
             }
             else
             {

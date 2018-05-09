@@ -33,13 +33,14 @@ public class SnakeBody : MonoBehaviour {
         if (other.gameObject.tag == "Player"                                    //Si je me fait touché par un joueur
             && other.gameObject.transform != head                               //Qui n'est pas ma propre tete,
             && other.GetComponent<SnakeMovements>().partnerAv != head           //Qui n'est pas mon partenaireAv,
-            && other.GetComponent<SnakeMovements>().partnerAr != head)          //Ni mon partenaireAr
+            && other.GetComponent<SnakeMovements>().partnerAr != head           //Ni mon partenaireAr
+            && !head.GetComponent<SnakeMovements>().invulnerability)            //Que je suis pas invulnérable
         {
-            decoupeCorps(myOrder, other.gameObject.transform);                  //Je me fait découper
+            DecoupeCorps(myOrder, other.gameObject.transform);                  //Je me fait découper
         }
     }
 
-    void decoupeCorps(int order, Transform otherT)
+    void DecoupeCorps(int order, Transform otherT)
     {   
         //Découper = destruction de mon corps de l'endroit touché à ma queue 
         for (int i = head.GetComponent<SnakeMovements>().bodyParts.Count - 1; i>order ; i--)
@@ -55,30 +56,20 @@ public class SnakeBody : MonoBehaviour {
                 {
                     head.GetComponent<SnakeMovements>().partnerAr = otherT;                                                 //Celui qui m'a mordu est mon nouveau partnaire arière
                     otherT.GetComponent<SnakeMovements>().partnerAv = head;                                                 //Je suis le nouveau partenaire avant de celui qui m'a mordu
+
                 }
             }
-            else if (head.GetComponent<SnakeMovements>().partnerAv == null && otherT.GetComponent<SnakeMovements>().partnerAr != null)       // Si je suis devant 
+            else if (head.GetComponent<SnakeMovements>().partnerAv == null && head.GetComponent<SnakeMovements>().partnerAr != null)       // Si je suis devant en coop
             {
-                    head.GetComponent<SnakeMovements>().partnerAr.GetComponent<SnakeMovements>().partnerAv = null;   //je me fais detacher 
-                    head.GetComponent<SnakeMovements>().partnerAr = null;
+                head.GetComponent<SnakeMovements>().partnerAr.GetComponent<SnakeMovements>().ResetVitesse();      //Ma vitesse redeviens normal (je n'ai plus de personne derière pour me booster)
+                head.GetComponent<SnakeMovements>().partnerAr.GetComponent<SnakeMovements>().partnerAv = null;   //je me fais detacher 
+                head.GetComponent<SnakeMovements>().partnerAr = null;
+                
             }
         }
 
+        StartCoroutine(head.GetComponent<SnakeMovements>().Invulnerability(1.0f)); //Imune for x seconde
 
-
-        /*
-        if (head.GetComponent<SnakeMovements>().partnerAv == null 
-            && otherT.GetComponent<SnakeMovements>().partnerAv == null             //Si celui qui me découpe a déja un partenaireAv, je me fait juste découper et séparer
-            && otherT.GetComponent<SnakeMovements>().partnerAr == null)         //Si celui qui me découpe a déja un partenaireAr, je me fait juste découper et séparé//Si je suis celui de derière je me fait juste découper          
-        {
-            if (head.GetComponent<SnakeMovements>().partnerAr != null)                                              //Si j'ai un partnaire arrière
-            {
-                head.GetComponent<SnakeMovements>().partnerAr.GetComponent<SnakeMovements>().partnerAv = null;      //Je me sépare de lui ( il n'a plus de partnaire avant)
-            }
-
-            head.GetComponent<SnakeMovements>().partnerAr = otherT;                                                 //Celui qui m'a mordu est mon nouveau partnaire arière
-            otherT.GetComponent<SnakeMovements>().partnerAv = head;                                                 //Je suis le nouveau partenaire avant de celui qui m'a mordu
-        }*/
     }
 
     }

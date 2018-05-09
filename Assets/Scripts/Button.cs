@@ -8,10 +8,29 @@ public class Button : MonoBehaviour {
     public GameObject MySnake;  //Serpent controlé par le boutton
     public string MyRole;       //Role du boutton ( utilisation L pour Rotation Left, R -- Right, U -- Up/Accéléré, D -- Down/Décéléré
 
+    public Vector3 initPos;     //Position Initiale = position "normale" dans l'UI
+
+    private void Start()
+    {
+        initPos = GetComponent<Transform>().position;        
+    }
+
+
+    private Vector3 movementVelocity;
+    [Range(0.0f, 1.0f)]
+    public float overTime = 0.5f;
+
     //Reception des messages
     private void Update()
     {
-        if(MySnake.GetComponent<SnakeMovements>().partnerAv == null)
+        // Le boutton essaye tjr de retourner a sa pos init (=tuto, on peut améliorer, a retravailler)
+        transform.position = Vector3.SmoothDamp(transform.position,
+               initPos,
+               ref movementVelocity,
+               overTime);
+
+
+        if (MySnake.GetComponent<SnakeMovements>().partnerAv == null)
         {
             switch (MyRole)
             {
@@ -67,16 +86,16 @@ public class Button : MonoBehaviour {
         switch (MyRole)
         {
             case "L":
-                MySnake.GetComponent<SnakeMovements>().rotateLeft();
+                MySnake.GetComponent<SnakeMovements>().RotateLeft();
                 break;
             case "R":
-                MySnake.GetComponent<SnakeMovements>().rotateRight();
+                MySnake.GetComponent<SnakeMovements>().RotateRight();
                 break;
             case "U":
-                MySnake.GetComponent<SnakeMovements>().speedUp();
+                MySnake.GetComponent<SnakeMovements>().SpeedUp();
                 break;
             case "D":
-                MySnake.GetComponent<SnakeMovements>().slowDown();
+                MySnake.GetComponent<SnakeMovements>().SlowDown();
                 break;
             default:
                 break;
@@ -92,10 +111,10 @@ public class Button : MonoBehaviour {
             case "R":
                 break;
             case "U":
-                MySnake.GetComponent<SnakeMovements>().resetVitesse();
+                MySnake.GetComponent<SnakeMovements>().ResetVitesse();
                 break;
             case "D":
-                MySnake.GetComponent<SnakeMovements>().resetVitesse();
+                MySnake.GetComponent<SnakeMovements>().ResetVitesse();
                 break;
             default:
                 break;
@@ -107,16 +126,16 @@ public class Button : MonoBehaviour {
         switch (MyRole)
         {
             case "L":
-                MySnake.GetComponent<SnakeMovements>().rotateLeft();
+                MySnake.GetComponent<SnakeMovements>().RotateLeft();
                 break;
             case "R":
-                MySnake.GetComponent<SnakeMovements>().rotateRight();
+                MySnake.GetComponent<SnakeMovements>().RotateRight();
                 break;
             case "U":
-                MySnake.GetComponent<SnakeMovements>().speedUp();
+                MySnake.GetComponent<SnakeMovements>().SpeedUp();
                 break;
             case "D":
-                MySnake.GetComponent<SnakeMovements>().slowDown();
+                MySnake.GetComponent<SnakeMovements>().SlowDown();
                 break;
             default:
                 break;
@@ -132,10 +151,10 @@ public class Button : MonoBehaviour {
             case "R":
                 break;
             case "U":
-                MySnake.GetComponent<SnakeMovements>().resetVitesse();
+                MySnake.GetComponent<SnakeMovements>().ResetVitesse();
                 break;
             case "D":
-                MySnake.GetComponent<SnakeMovements>().resetVitesse();
+                MySnake.GetComponent<SnakeMovements>().ResetVitesse();
                 break;
             default:
                 break;
