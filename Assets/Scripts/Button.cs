@@ -12,7 +12,8 @@ public class Button : MonoBehaviour {
 
     private void Start()
     {
-        initPos = GetComponent<Transform>().position;        
+        initPos = GetComponent<Transform>().position;
+        GetComponent<SpriteRenderer>().color = MySnake.GetComponent<SpriteRenderer>().color;
     }
 
 
@@ -29,6 +30,7 @@ public class Button : MonoBehaviour {
                ref movementVelocity,
                overTime);
 
+        GetComponent<SpriteRenderer>().color = MySnake.GetComponent<SpriteRenderer>().color;
 
         if (MySnake.GetComponent<SnakeMovements>().partnerAv == null)
         {

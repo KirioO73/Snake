@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SnakeMovements : MonoBehaviour {
 
@@ -12,16 +13,42 @@ public class SnakeMovements : MonoBehaviour {
     public bool alreadyFusionSomeoneElse;                    //Boolean pour savoir si ce snake s'est déjà attacher derière un autre snake
     public bool invulnerability;                             //Boolean d'invulnérabilité, true = invulnérable
 
-	void Start () {
+    public Color InitColor;
+
+    private Animator animatorImune;                              //Animator de cet objet
+
+    public int Score;
+
+    void Start () {
                                                             //Init
-        partnerAv = null;                                   //sans partenaire avant
+        partnerAv = null;                                   //sans partenaire avantx
         partnerAr = null;                                   //sans partenaire arière
         alreadyFusionSomeoneElse = false;                   //Sans s'etre déja attaché derière quelqu'un
         Physics2D.IgnoreLayerCollision(0, 8);               //Sans invulnérabilité
-        
+        InitColor = GetComponent<SpriteRenderer>().color;   //Couleur Initiale  = (Couleur à la création)
+        animatorImune = GetComponent<Animator>();           //Animator de l'imunité
+        animatorImune.enabled = false;
+ 
     }
 	
-	void Update () {
+	void Update ()
+    {
+
+        
+        //Partage des couleurs
+        if (partnerAv != null)
+        {
+            GetComponent<SpriteRenderer>().color = partnerAv.GetComponent<SpriteRenderer>().color;
+        }
+        else if (partnerAr != null)
+        {
+            Color tmp = InitColor;
+            tmp.r = (InitColor.r + Math.Max(partnerAr.GetComponent<SnakeMovements>().InitColor.b, Math.Max(partnerAr.GetComponent<SnakeMovements>().InitColor.r, partnerAr.GetComponent<SnakeMovements>().InitColor.g))) / 2;
+            tmp.g = (InitColor.g + Math.Max(partnerAr.GetComponent<SnakeMovements>().InitColor.b, Math.Max(partnerAr.GetComponent<SnakeMovements>().InitColor.r, partnerAr.GetComponent<SnakeMovements>().InitColor.g))) / 2;
+            tmp.b = (InitColor.b + Math.Max(partnerAr.GetComponent<SnakeMovements>().InitColor.b, Math.Max(partnerAr.GetComponent<SnakeMovements>().InitColor.r, partnerAr.GetComponent<SnakeMovements>().InitColor.g))) / 2;
+            GetComponent<SpriteRenderer>().color = tmp;
+        }
+        else GetComponent<SpriteRenderer>().color = InitColor;
 
         //Commandes du controle clavier pour simplifications des tests sur machine
         if (gameObject.transform.parent.name == "Snake1")
@@ -122,9 +149,20 @@ public class SnakeMovements : MonoBehaviour {
             AddBody();
 		}
         if (other.transform.tag == "ApplePourrie")                        // check le tag de l'objet en collision
-        {                             
+        {        
+            
             Destroy(other.gameObject);                                    // detruit la pomme touchée
-            RemoveBody();
+            if(!invulnerability)                                          //Si j'y suis sensible
+                RemoveBody();                                             //Enleve un bout de corps
+        }
+        if (other.transform.tag == "AppleGold")
+        {
+            Destroy(other.gameObject);                                  //Detruit la pomme touché
+            AddBody();                                                  //Ajoute 2 bouts de corps    
+            AddBody();
+            StartCoroutine(Invulnerability(5.0f));                      //Le serpent est invulnérable pendant 5 secondes
+            if (partnerAr != null)
+                StartCoroutine(partnerAr.GetComponent<SnakeMovements>().Invulnerability(5.0f));
         }
     }
 
@@ -209,34 +247,12 @@ public class SnakeMovements : MonoBehaviour {
 
     public IEnumerator Invulnerability(float during)
     {
-        //Met le bool invulnerability du snake et de son partenaire s'il y a, à true pour "during" secondes
-
-        if(partnerAr != null) //Check des cas pour partenaire
-        {            
-            partnerAr.GetComponent<SnakeMovements>().invulnerability = true;
-            invulnerability = true;
-            yield return new WaitForSeconds(during);
-            invulnerability = false;
-            partnerAr.GetComponent<SnakeMovements>().invulnerability = false;
-            yield return null;
-        }
-        else if (partnerAv != null) //Check des cas pour partenaire
-        {
-            partnerAv.GetComponent<SnakeMovements>().invulnerability = true;
-            invulnerability = true;
-            yield return new WaitForSeconds(during);
-            invulnerability = false;
-            partnerAv.GetComponent<SnakeMovements>().invulnerability = false;
-            yield return null;
-        }
-        else    //Cas solo
-        {
-            invulnerability = true;                     //Set bool a true
-            yield return new WaitForSeconds(during);    //Attends during secondes
-            invulnerability = false;                    //Reset bool a false
-            yield return null;                          //Sort du Coroutine
-        }
-        
+        invulnerability = true;                     //Set bool a true
+        animatorImune.enabled = true;
+        yield return new WaitForSeconds(during);    //Attends during secondes
+        invulnerability = false;                    //Reset bool a false1
+        animatorImune.enabled = false;
+        yield return null;                          //Sort du Coroutine        
     }
 }
 

@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 58110775904226856}
   m_Layer: 0
   m_Name: AppleGold
-  m_TagString: Apple
+  m_TagString: AppleGold
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
