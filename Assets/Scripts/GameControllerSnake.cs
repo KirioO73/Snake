@@ -135,7 +135,7 @@ public class GameControllerSnake : MonoBehaviour {
             MesSnakes[i].transform.Find("SnakeHead").GetComponent<SnakeMovements>().enabled = true;
         }
 
-        delay = 5f;
+        delay = 120f;
         yield return null;
     }
 
