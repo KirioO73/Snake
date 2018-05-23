@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class GameControllerSnake : MonoBehaviour {
 
     public GameObject[] cibles;
@@ -24,7 +25,7 @@ public class GameControllerSnake : MonoBehaviour {
 
     public int[] joueurs;
 
-    List<GameObject> MesSnakes;
+    private List<GameObject> MesSnakes;
 
     bool spawnEnable;
     // Use this for initialization
@@ -32,12 +33,15 @@ public class GameControllerSnake : MonoBehaviour {
         resultatsTop.enabled = false;
         resultatsBot.enabled = false;
         MesSnakes = new List<GameObject>();
+        //MesSnakes = GestionScenes.arrayJoueur().toList();
         //Recuperation des joueurs
         for(int i = 0 ; i < joueurs.Length; i++ )
         {
             if (joueurs[i] == 0)
             {
                 GameObject.Find("Snake" + (i + 1)).SetActive(false);
+                GameObject.Find("Score Snake" + (i + 1)).SetActive(false);
+                GameObject.Find("x2 Score S" + (i + 1)).SetActive(false);
             }
             else
             {
@@ -132,7 +136,7 @@ public class GameControllerSnake : MonoBehaviour {
             MesSnakes[i].transform.Find("SnakeHead").GetComponent<SnakeMovements>().enabled = true;
         }
 
-        delay = 120f;
+        delay = 5f;
         yield return null;
     }
 
@@ -157,11 +161,11 @@ public class GameControllerSnake : MonoBehaviour {
         //On créer le message de fin, en checkant si le serpent est en coop ou non
         string tmp = "";
         if (TmpSnake.transform.Find("SnakeHead").GetComponent<SnakeMovements>().partnerAr != null)
-            tmp = TmpSnake.name  + " et " + TmpSnake.transform.Find("SnakeHead").GetComponent<SnakeMovements>().partnerAr.parent.name + " " + TmpSnake.transform.Find("Score " + TmpSnake.name).GetComponent<Text>().text;
+            tmp = TmpSnake.name  + " et " + TmpSnake.transform.Find("SnakeHead").GetComponent<SnakeMovements>().partnerAr.parent.name + " " + GameObject.Find("Score " + TmpSnake.name).GetComponent<Text>().text;
         if (TmpSnake.transform.Find("SnakeHead").GetComponent<SnakeMovements>().partnerAv != null)
-            tmp = TmpSnake.transform.Find("SnakeHead").GetComponent<SnakeMovements>().partnerAv.parent.name +" et "+ TmpSnake.name + " " + TmpSnake.transform.Find("Score " + TmpSnake.name).GetComponent<Text>().text;
+            tmp = TmpSnake.transform.Find("SnakeHead").GetComponent<SnakeMovements>().partnerAv.parent.name +" et "+ TmpSnake.name + " " + GameObject.Find("Score " + TmpSnake.name).GetComponent<Text>().text;
         else
-            tmp = TmpSnake.name + " " + TmpSnake.transform.Find("Score " + TmpSnake.name).GetComponent<Text>().text;
+            tmp = TmpSnake.name + " " + GameObject.Find("Score " + TmpSnake.name).GetComponent<Text>().text;
 
         //Mise a jour des resultats
         resultatsBot.enabled = true;
