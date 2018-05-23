@@ -291,7 +291,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\CubeBonus.cs" />
     <Compile Include="Assets\Scripts\Button.cs" />
     <Compile Include="Assets\Scripts\GameControllerSnake.cs" />
     <Compile Include="Assets\Scripts\ScoreUpdate.cs" />
@@ -299,6 +298,9 @@
     <Compile Include="Assets\Scripts\SnakeBody.cs" />
     <Compile Include="Assets\Scripts\SnakeMovements.cs" />
     <Compile Include="Assets\Scripts\TouchInput.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\BLUR.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

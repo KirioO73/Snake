@@ -14,8 +14,7 @@ public class GameControllerSnake : MonoBehaviour {
     public Text resultatsTop;
     public Text resultatsBot;
 
-    [Range(0.0f, 200.0f)]
-    public float delay;
+    private float delay;
     [Range(0.0f, 200.0f)]
     public float nouritureDelay;
 
@@ -142,24 +141,59 @@ public class GameControllerSnake : MonoBehaviour {
 
     IEnumerator AffichageFin()
     {
+
         //On pause le jeu
         for (int i = 0; i < MesSnakes.Count; i++)
         {
             MesSnakes[i].transform.Find("SnakeHead").GetComponent<SnakeMovements>().enabled = false;
-        }        
-
-        //Obtention du meilleur
-        GameObject TmpSnake = MesSnakes[0];
-        for (int i = 1; i < MesSnakes.Count; i++)
-        {
-            if (MesSnakes[i].transform.Find("SnakeHead").GetComponent<SnakeMovements>().Score 
-                > 
-                TmpSnake.transform.Find("SnakeHead").GetComponent<SnakeMovements>().Score)
-                TmpSnake = MesSnakes[i];
         }
 
+        //Onfloute la scène Arrière
+        GameObject.Find("BLUR").GetComponent<SpriteRenderer>().enabled = true;
+
+        //Tri en fonction du meilleur score
+        MesSnakes.Sort((a, b) => (b.transform.Find("SnakeHead").GetComponent<SnakeMovements>().Score.
+               CompareTo(
+               a.transform.Find("SnakeHead").GetComponent<SnakeMovements>().Score)));
+
+
+        for (int i = 0; i < MesSnakes.Count; i++)
+        {
+            print(MesSnakes[i].transform.Find("SnakeHead").GetComponent<SnakeMovements>().Score);
+            GameObject txt = GameObject.Find("Score " + MesSnakes[i].name);
+            txt.GetComponent<ScoreUpdate>().enabled = false;
+            if (MesSnakes[i].name == "Snake1" || MesSnakes[i].name == "Snake2" || MesSnakes[i].name == "Snake3")
+            {
+                txt.GetComponent<RectTransform>().position = new Vector3(txt.GetComponent<RectTransform>().position.x - 1.5f, txt.GetComponent<RectTransform>().position.y - 2, txt.GetComponent<RectTransform>().position.z);
+                
+            }
+            else
+            {
+                txt.GetComponent<RectTransform>().position = new Vector3(txt.GetComponent<RectTransform>().position.x + 1.5f, txt.GetComponent<RectTransform>().position.y + 2, txt.GetComponent<RectTransform>().position.z);
+                
+            }
+
+            string text = txt.GetComponent<Text>().text;
+            if(i >= 1)
+            {
+                if (MesSnakes[i - 1].transform.Find("SnakeHead").GetComponent<SnakeMovements>().Score == MesSnakes[i].transform.Find("SnakeHead").GetComponent<SnakeMovements>().Score)
+                {
+                    text = GameObject.Find("Score " + MesSnakes[i - 1].name).GetComponent<Text>().text;
+                }
+                else
+                {
+                    text += "\n Rank " + (i + 1);
+                }            
+            }
+            else text += "\n Rank " + (i + 1);
+
+            txt.GetComponent<Text>().text = text;
+        }
+
+        
+
         //On créer le message de fin, en checkant si le serpent est en coop ou non
-        string tmp = "";
+        /*string tmp = "";
         if (TmpSnake.transform.Find("SnakeHead").GetComponent<SnakeMovements>().partnerAr != null)
             tmp = TmpSnake.name  + " et " + TmpSnake.transform.Find("SnakeHead").GetComponent<SnakeMovements>().partnerAr.parent.name + " " + GameObject.Find("Score " + TmpSnake.name).GetComponent<Text>().text;
         if (TmpSnake.transform.Find("SnakeHead").GetComponent<SnakeMovements>().partnerAv != null)
@@ -173,7 +207,8 @@ public class GameControllerSnake : MonoBehaviour {
         resultatsBot.color = TmpSnake.transform.Find("SnakeHead").GetComponent<SpriteRenderer>().color;
         resultatsTop.color = TmpSnake.transform.Find("SnakeHead").GetComponent<SpriteRenderer>().color;
         resultatsBot.text = "Vainqueur : \n " + tmp;
-        resultatsTop.text = "Vainqueur : \n " + tmp;
+        resultatsTop.text = "Vainqueur : \n " + tmp;*/
+
         yield return new WaitForSeconds(3);
         //Sorti Appli to Hub 
     }

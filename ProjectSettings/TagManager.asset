@@ -52,3 +52,6 @@ TagManager:
   - name: Head
     uniqueID: 2001856543
     locked: 0
+  - name: Text
+    uniqueID: 2534794093
+    locked: 0
